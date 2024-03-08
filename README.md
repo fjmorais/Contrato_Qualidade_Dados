@@ -1115,4 +1115,192 @@ Figura 118 - Erro em relação a tabela do banco de dados possuir mais colunas d
 
 ### Como fazer o DocString e qual a sua vantagem ?
 
-#PAREI NO MINUTO 53:00 para falar do assunto docstring.
+Um bom exemplo para fazer um contrato de dados é copiar o seu código em python e solicitar ao chatgpt para fazer a sua docstring.
+
+Vejamos:
+
+![alt text](pic/119image.png)
+
+Figura 119 - Copiando o código python para fazer a nossa docstring.
+
+Copiar no Chat GPT e solicitar para fazer a Docstring.
+
+![alt text](pic/120image.png)
+
+Figura 120 - Chatgpt fazendo a DocString.
+
+Copiando a Doc string para o nosso código. ATENÇÃO informar em inglês (Attributes)!
+
+![alt text](pic/121image.png)
+
+Figura 121 - Docstring com a propriedade Attributes
+
+### Qual é a vantagem de fazer o docstring ?
+
+Toda vez que for passar o mouse na classe, teremos as informações da funcionalidade da mesma.
+
+![alt text](pic/122image.png)
+
+Figura 122 - Vantagens da DocString no código.
+
+![alt text](pic/123image.png)
+
+Figura 123 - Resultado da Docstring no Mkdocs.
+
+![alt text](pic/124image.png)
+
+Figura 124 - Como devemos informar no index.md do mkdocs a DocString da classe.
+
+
+### Como fazer o Deploy do MkDocs
+
+Executar o comando abaixo:
+
+![alt text](pic/125image.png)
+
+Figura 125 - Fazendo o Deploy do Mkdocs.
+
+
+![alt text](pic/126image.png)
+
+Figura 126 - Resultado com o link para acesso da documentação. Tempo médio para deploy (5 Minutos).
+
+
+### Validação do e-mail por meio do regex
+
+O Pandera não possui por padrão uma biblioteca para validação de e-mail. Mas para isso, podemos adicionar o artifício do regex para complementar essa necessidade.
+
+Vamos a essa opção:
+
+![alt text](pic/127image.png)
+
+Figura 127 - Criar o regex com uma padrão que possa ser e-mail e fazer esse ponteramento no código.
+
+### Fazer a função de transformação
+
+
+A seguir vamos ver algumas dicas para função de transformação.
+
+
+![alt text](pic/128image.png)
+
+Figura 128 - Função de transformação.
+
+![alt text](pic/129image.png)
+
+Figura 129 - Informando o dataframe de input e de output. O de output é o data extração e o de input é o da transformação.
+
+
+![alt text](pic/130image.png)
+
+Figura 130 - Criar uma nova classe para validar as Kpi's de colunas que ainda não existem. Essa nova classe vai herdar informações da classe original para o contrato de dados. Cria uma classe nova, informar como passagem de parâmetro a classe "Pai" e informa as colunas que devem ser adcionadas. Nesse caso, o output será avaliado pela classe "ProductSchemaKPI" que contém os Kpi's criados.
+
+
+### Criar testes unitários usando o ChatGPT.
+
+
+Obter o codigo que deseja fazer o teste unitário e inserior no chat gpt:
+
+
+![alt text](pic/131image.png)
+
+Figura 131 - ChatGPT auxiliando para fazer os testes unitários.
+
+
+![alt text](pic/132image.png)
+
+Figura 132 - Excutando o testes unitários.
+
+![alt text](pic/133image.png)
+
+Figura 133 - Inserindo o contrato de dados para fazer os testes unitários e fazer a validação das colunas.
+
+### Para finalizar o ETL, vamos fazer o Load para o DuckDB
+
+Fazer a instalação do duckdb:
+
+```bash
+poetry add duckdb
+```
+
+![alt text](pic/134image.png)
+
+Figura 134 - Instalando o Duckdb.
+
+Código para fazer o load no Duckdb. Aqui, nessa função, vamos fazer o check do input e do output novamente.
+
+
+![alt text](pic/135image.png)
+
+Figura 135 - Função com o parâmetros do Duckdb.
+
+![alt text](pic/136image.png)
+
+Figura 136 - Destaque do check de input no Duckdb, que será com o e-mail e as configurações do código.
+
+![alt text](pic/137image.png)
+
+Figura 137 - Executar o código para validar se o arquivo do duckdb será criado.
+
+![alt text](pic/138image.png)
+
+Figura 138 - Arquivo do duckdb criado com sucesso.
+
+### Como validar se o arquivo duckdb foi criado com sucesso ?
+
+Fazer a criação de um arquivo python para validar os dados do Duckdb.
+
+![alt text](pic/139image.png)
+
+Figura 139 - Código python para ler o arquivo duckdb.
+
+Código python abaixo:
+
+```python
+import duckdb
+
+def read_from_duckdb_and_print(table_name: str, db_file: str = 'my_duckdb.db'):
+    """
+    Lê dados de uma tabela DuckDB e imprime os resultados.
+
+    Parâmetros:
+    - table_name: Nome da tabela de onde os dados serão lidos.
+    - db_file: Caminho para o arquivo DuckDB.
+    """
+    # Conectar ao DuckDB
+    con = duckdb.connect(database=db_file)
+
+    # Executar consulta SQL
+    query = f"SELECT * FROM {table_name}"
+    result = con.execute(query).fetchall()
+
+    # Fechar a conexão
+    con.close()
+
+    # Imprimir os resultados
+    for row in result:
+        print(row)
+
+if __name__ == "__main__":
+    # Nome da tabela para consulta
+    table_name = "tabela_kpi"
+    
+    # Ler dados da tabela e imprimir os resultados
+    read_from_duckdb_and_print(table_name)
+```
+
+### Como gerar esse schema em um json ao invés de um duckdb
+
+
+Inserir as duas linhas de código abaixo para gerar um json:
+
+![alt text](pic/140image.png)
+
+Figura 140 - Gerar arquivo json ao invés de salvar no duckdb.
+
+# ATENÇÃO
+
+Todas as funções criadas devem possuir Docstring e assim inserir no mkdocs do arquivo index.md.
+
+
+
